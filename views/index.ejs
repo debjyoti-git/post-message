@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>POST MESSAGE TO SCHEDULE A JOB</title>
+  </head>
+
+  <body>
+    <h1>POST MESSAGE TO SCHEDULE A JOB</h1>
+
+    <form id="myForm">
+      <label>Message : <input type="text" name="message" id="message" /></label
+      ><br />
+
+      <label
+        >Date :
+        <input
+          style="margin-top: 20px"
+          type="date"
+          name="d_date"
+          id="d_date" /></label
+      ><br />
+      <label style="margin-top: 20px"
+        >Time :
+        <input style="margin-top: 20px" type="time" name="t_time" id="t_time"
+      /></label>
+
+      <input
+        style="margin-right: 20px"
+        type="submit"
+        value="submit"
+        onclick="submit_form(event)"
+      />
+      <br />
+      <hr />
+      <div id="apitext" style="display: none">
+        Saving data to database is done by worker threads ............<br />
+        Main thread is independent of executing other pieces of code
+      </div>
+    </form>
+  </body>
+</html>
+<script>
+  var submit_form = (e) => {
+    var http = new XMLHttpRequest();
+    var url = "/api/postTime";
+    var message = document.getElementById("message").value;
+    var date = document.getElementById("d_date").value;
+    var time = document.getElementById("t_time").value;
+    var timestamp = new Date(date + " " + time).getTime();
+    var params = "message=" + message + "&time=" + timestamp;
+    http.open("POST", url, true);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.onreadystatechange = function () {
+      if (http.readyState == 4 && http.status == 200) {
+      }
+    };
+    http.send(params);
+    e.preventDefault();
+  };
+</script>
