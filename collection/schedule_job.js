@@ -8,7 +8,7 @@ exports.startJOB = async (req, res) => {
   // console.log("filter", filter);
 
   try {
-    console.log(filter);
+    console.log("i am here ", filter);
     if (filter._id) {
       const updated = await ScheduleJob.findOneAndUpdate(
         { _id: ObjectId(filter._id) },
@@ -16,7 +16,7 @@ exports.startJOB = async (req, res) => {
         { upsert: true, new: true }
       );
 
-      triggerChange(updated._id.toString(), updated.time, doc.message);
+      triggerChange(updated._id.toString(), updated.time, filter.message);
       res.status(200).json("Inserted");
     } else {
       const Doc = new ScheduleJob(body);
