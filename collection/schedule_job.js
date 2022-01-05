@@ -16,7 +16,7 @@ exports.startJOB = async (req, res) => {
         { upsert: true, new: true }
       );
 
-      triggerChange(updated._id.toString(), updated.time, doc.message);
+      triggerChange(updated._id.toString(), updated.time, filter.message);
       res.status(200).json("Inserted");
     } else {
       const Doc = new ScheduleJob(body);
@@ -24,9 +24,10 @@ exports.startJOB = async (req, res) => {
       triggerChange(doc._id.toString(), doc.time, doc.message);
       res.status(200).json("Inserted");
     }
+
     // console.log(updated);
   } catch (error) {
-    console.log(error);
+    console.log("this is a error message", error);
     res.status(500).json(error);
   }
   //res.status(200).json("it is done");
